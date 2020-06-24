@@ -24,4 +24,18 @@ export class HeroesComponent implements OnInit {
     //Observable:这可能立即发生，也可能会在几分钟之后。 然后，subscribe() 方法把这个英雄数组传给这个回调函数，该函数把英雄数组赋值给组件的 heroes 属性。
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
+
+  add(name: string): void {
+    if (!name) {
+      return;
+    }
+    this.heroService.addHero({name} as Hero).subscribe(hero => {
+      this.heroes.push(hero);
+    })
+  }
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
 }
